@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+#board {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 55%;
+}
+#title {
+  text-align: center;
+}
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.cell {
+  height: 150px;
+  width: 33%;
+}
+.cell:nth-child(3n + 2) {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+.cell:nth-child(n + 4):nth-child(-n + 6) {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
