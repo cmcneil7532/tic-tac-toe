@@ -18,12 +18,5 @@
 .cell {
   height: 150px;
   width: 33%;
-}
-.cell:nth-child(3n + 2) {
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-}
-.cell:nth-child(n + 4):nth-child(-n + 6) {
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border: 1px solid black;
 }
