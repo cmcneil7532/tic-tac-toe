@@ -20,6 +20,8 @@ let state = {
   currentPlayer: ["x", "o"],
   player1: "",
   player2: "",
+  player1Symbol: "",
+  player2symbol: "",
   count: 0,
   turnIndex: 0,
 };
@@ -34,6 +36,21 @@ titleH1.innerText = "Tic-Tac-Toe";
 titleH1.id = "title";
 body.appendChild(titleH1);
 
+const h2 = document.createElement("h2");
+body.appendChild(h2);
+
+function renderPlayerTurn() {
+  if (!state.player1 && !state.player2) {
+    alert("Need player info to display");
+  } else if (state.player1 && state.player2) {
+    if (state.turnIndex === 0) {
+      h2.innerText = `${state.player1} turn`;
+    } else if (state.turnIndex === 1) {
+      h2.innerText = `${state.player2} turn`;
+    }
+  }
+}
+
 //Header Element
 const header = document.createElement("header");
 header.className = "header";
@@ -43,6 +60,7 @@ header.innerHTML = `<input id="first_player" type="text" placeholder="Player 1" 
 <button id="restart">Restart Game</button>`;
 
 body.appendChild(header);
+
 //Create a board function
 function createBoard() {
   board.id = "board";
@@ -61,13 +79,17 @@ createBoard();
 //Click on board and listen to which box was clicked
 board.addEventListener("click", (event) => {
   let cellIndex = event.target.dataset.index; // grab the dataset-index from which tile was clicked
-  if (!event.target.innerText) {
-    //If no present x or o
+  if (!state.player1 && !state.player2) {
+    alert("Need one player to play");
+  } else if (!event.target.innerText) {
+    //If no present x or o place a corresponding letter
+
     event.target.innerText = state.currentPlayer[state.turnIndex]; //change the inner text to the corresponding players value
-    state.board[cellIndex].tile = state.currentPlayer[state.turnIndex]; //set my tile to either x or
+    state.board[cellIndex].tile = state.currentPlayer[state.turnIndex]; //set my tile to either x or o
     state.board[cellIndex].isClicked = true; //set state of is clicked to true
+    renderPlayerTurn();
+    switchPlayer();
   }
-  switchPlayer();
   setTimeout(() => {
     checkForWinner();
   }, 1000);
@@ -81,15 +103,13 @@ function switchPlayer() {
   }
 }
 
+//Save the players name to the the state
 function savePlayerToState() {
   const player1 = document.querySelector("#first_player");
   const player2 = document.querySelector("#second_player");
   if (player2.value && player2.value) {
     state.player1 = player1.value;
     state.player2 = player2.value;
-  } else if (!player2.value) {
-    state.player1 = player1.value;
-    state.player2 = "Computer";
   }
 }
 //StartGame
@@ -98,19 +118,25 @@ startGame.innerText = "Start Game";
 
 startGame.addEventListener("click", () => {
   savePlayerToState();
-  //Based on state.player1 is a string and state.player2 is also a string run full game
-
   //Based on state.player1 is a string and state.player2 is an empty string run with computer
-  if (state.player1 && !state.player2) {
-    playComputer(state.player1);
+  if (!state.player1 && !state.player2) {
+    alert("Need two players"); //Display player1 vs computer
   } else {
-    const h3 = document.createElement("h3");
-    h3.id = "h3";
-    h3.innerText = `${state.player1} vs ${state.player2}`;
-    board.appendChild(h3);
+    //Assinging each player to a random logo
+    let randomNumber = Math.floor(Math.random() * 2);
+
+    state.player1Symbol = state.currentPlayer[randomNumber];
+    if (state.player1Symbol === "x") {
+      state.player2symbol = "o";
+      alert(`${state.player1} starts`);
+    } else if (state.player1Symbol === "o") {
+      state.player2symbol = "x";
+      alert(`${state.player2} starts`);
+    }
   }
 });
-
+const h4 = document.createElement("h4");
+board.appendChild(h4);
 //check for winner
 function checkForWinner() {
   //Look for horizontal win
@@ -120,18 +146,18 @@ function checkForWinner() {
     board[0].tile === board[1].tile &&
     board[0].tile === board[2].tile
   ) {
-    console.log(
-      state.board[0].tile === "x"
-        ? `${state.player1} won!`
-        : `${state.player2} won!`
+    alert(
+      state.board[0].tile === state.player1Symbol
+        ? (h4.innerText = `${state.player1} won!`)
+        : (h4.innerText = `${state.player2} won!`)
     );
   } else if (
     board[3].tile !== "" &&
     board[3].tile === board[4].tile &&
     board[3].tile === board[5].tile
   ) {
-    console.log(
-      state.board[3].tile === "x"
+    alert(
+      state.board[3].tile === state.player1Symbol
         ? `${state.player1} won!`
         : `${state.player2} won!`
     );
@@ -140,8 +166,8 @@ function checkForWinner() {
     board[6].tile === board[7].tile &&
     board[6].tile === board[8].tile
   ) {
-    console.log(
-      state.board[6].tile === "x"
+    alert(
+      state.board[6].tile === state.player1Symbol
         ? `${state.player1} won!`
         : `${state.player2} won!`
     );
@@ -152,8 +178,8 @@ function checkForWinner() {
     board[0].tile === board[3].tile &&
     board[0].tile === board[6].tile
   ) {
-    console.log(
-      state.board[0].tile === "x"
+    alert(
+      state.board[0].tile === state.player1Symbol
         ? `${state.player1} won!`
         : `${state.player2} won!`
     );
@@ -162,8 +188,8 @@ function checkForWinner() {
     board[1].tile === board[4].tile &&
     board[1].tile === board[7].tile
   ) {
-    console.log(
-      state.board[1].tile === "x"
+    alert(
+      state.board[1].tile === state.player1Symbol
         ? `${state.player1} won!`
         : `${state.player2} won!`
     );
@@ -172,8 +198,8 @@ function checkForWinner() {
     board[2].tile === board[5].tile &&
     board[2].tile === board[8].tile
   ) {
-    console.log(
-      state.board[2].tile === "x"
+    alert(
+      state.board[2].tile === state.player1Symbol
         ? `${state.player1} won!`
         : `${state.player2} won!`
     );
@@ -184,8 +210,8 @@ function checkForWinner() {
     board[0].tile === board[4].tile &&
     board[0].tile === board[8].tile
   ) {
-    console.log(
-      state.board[0].tile === "x"
+    alert(
+      state.board[0].tile === state.player1Symbol
         ? `${state.player1} won!`
         : `${state.player2} won!`
     );
@@ -194,16 +220,27 @@ function checkForWinner() {
     board[2].tile === board[4].tile &&
     board[2].tile === board[6].tile
   ) {
-    console.log(
-      state.board[2].tile === "x"
+    alert(
+      state.board[2].tile === state.player1
         ? `${state.player1} won!`
         : `${state.player2} won!`
     );
     //Make a draw after all wins arent poosibel
-  } else if (state.count === 8) {
-    alert("Draw");
+  } else if (noWinner() === 9) {
+    setTimeout(() => {
+      alert("Draw");
+    });
   }
-  return state.count++;
+}
+//Check for a draw
+function noWinner() {
+  let count = 0;
+  for (let i = 0; i < state.board.length; i++) {
+    if (state.board[i].isClicked === true) {
+      count++;
+    }
+  }
+  return count;
 }
 //make a reset button
 const restartGame = document.querySelector("#restart");
@@ -237,15 +274,7 @@ function resetGame(parent) {
   player2.value = "";
   createBoard();
 }
-console.log();
 restartGame.addEventListener("click", () => {
   resetGame(board);
+  body.removeChild(h2);
 });
-
-//Check if Computer is playing
-function playComputer(player1) {
-  const h3 = document.createElement("h3");
-  h3.id = "h3";
-  h3.innerText = `${player1} vs Computer`;
-  board.appendChild(h3);
-}
