@@ -38,11 +38,12 @@ body.appendChild(titleH1);
 
 const h2 = document.createElement("h2");
 body.appendChild(h2);
-
+//Decide who x and o base off randomization
 function renderPlayerTurn() {
   if (!state.player1 && !state.player2) {
     alert("Need player info to display");
   } else if (state.player1 && state.player2) {
+    h2.classList.remove("hidden");
     if (state.turnIndex === 0) {
       h2.innerText = `${state.player1} turn`;
     } else if (state.turnIndex === 1) {
@@ -128,15 +129,13 @@ startGame.addEventListener("click", () => {
     state.player1Symbol = state.currentPlayer[randomNumber];
     if (state.player1Symbol === "x") {
       state.player2symbol = "o";
-      alert(`${state.player1} starts`);
+      alert(`${state.player1} starts!`);
     } else if (state.player1Symbol === "o") {
       state.player2symbol = "x";
-      alert(`${state.player2} starts`);
+      alert(`${state.player2} starts!`);
     }
   }
 });
-const h4 = document.createElement("h4");
-board.appendChild(h4);
 //check for winner
 function checkForWinner() {
   //Look for horizontal win
@@ -148,8 +147,8 @@ function checkForWinner() {
   ) {
     alert(
       state.board[0].tile === state.player1Symbol
-        ? (h4.innerText = `${state.player1} won!`)
-        : (h4.innerText = `${state.player2} won!`)
+        ? `${state.player1} won!`
+        : `${state.player2} won!`
     );
   } else if (
     board[3].tile !== "" &&
@@ -276,5 +275,5 @@ function resetGame(parent) {
 }
 restartGame.addEventListener("click", () => {
   resetGame(board);
-  body.removeChild(h2);
+  h2.classList.add("hidden");
 });

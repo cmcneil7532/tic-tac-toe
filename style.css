@@ -2,18 +2,18 @@
   box-sizing: border-box;
 }
 body {
-  background-color: #cbe4de;
+  background-color: #4e6c50;
 }
 
 #board {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 auto;
+  margin: 50px auto 0 auto;
   width: 55%;
-  background: linear-gradient(353deg, #22c1c3, #6a40d4);
 }
 #title {
   text-align: center;
+  color: white;
 }
 .header {
   text-align: center;
@@ -22,7 +22,7 @@ body {
 .cell {
   height: 150px;
   width: 33.3%;
-  border: 1px solid rgb(255, 255, 255);
+  border: 3px solid #aa8b56;
   font-size: 60px;
   display: flex;
   justify-content: center;
@@ -35,6 +35,7 @@ h1 {
 }
 h2 {
   text-align: center;
+  color: white;
 }
 
 #h3 {
@@ -47,10 +48,33 @@ input {
   border: none;
   padding: 10px;
   border-radius: 3px;
+  text-align: center;
+  font-size: 1rem;
 }
 input:hover {
   box-shadow: 0px 2px 3px gray;
 }
 input:focus {
   outline: none;
+}
+button {
+  border: none;
+  height: 2rem;
+  border-radius: 3px;
+  width: 9rem;
+  cursor: pointer;
+}
+#start {
+  background-color: rgb(65, 65, 188);
+  margin-right: 30px;
+  color: rgb(235, 231, 231);
+  font-size: 1rem;
+}
+#restart {
+  background-color: rgb(214, 96, 96);
+  color: rgb(235, 231, 231);
+  font-size: 1rem;
+}
+.hidden {
+  visibility: hidden;
 }
